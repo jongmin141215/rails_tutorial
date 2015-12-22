@@ -33,6 +33,13 @@ class UserTest < ActiveSupport::TestCase
     assert_not @user.valid?
   end
 
+  test "email is case insensitive" do
+    uppercase_email = "TEST@TEST.COM"
+    @user.email = uppercase_email
+    @user.save
+    assert_equal uppercase_email.downcase, @user.reload.email
+  end
+
   test "email validation should accept valid addresses" do
     valid_addresses = %w[user@example.com USER@foo.COM A_US-ER@foo.bar.org
                          first.last@foo.jp alice+bob@baz.cn]
