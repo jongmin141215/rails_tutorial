@@ -5,7 +5,7 @@ class UserTest < ActiveSupport::TestCase
   #   assert true
   # end
   def setup
-    @user = User.new(name: "Jongmin", email: "test@test.com",
+    @user = User.new(name: "Jongmin", email: "jongmin@test.com",
                      password: 'foobar', password_confirmation: 'foobar')
   end
 
@@ -66,5 +66,9 @@ class UserTest < ActiveSupport::TestCase
   test "password should have a minimun length" do
     @user.password = @user.password_confirmation = "a" * 5
     assert_not @user.valid?
+  end
+
+  test "authenticated? should return false for a user with nil digest" do
+    assert_not @user.authenticated?('')
   end
 end
